@@ -23,6 +23,9 @@
 <script>
 export default {
   props: {
+    card: {
+      type: [String, Number, Array, Object],
+    },
     imgBackFaceUrl: {
       type: String,
       require: true,
@@ -36,6 +39,8 @@ export default {
   methods: {
     onToggleFlipCard() {
       this.isFlipped = !this.isFlipped;
+
+      if (this.isFlipped) this.$emit("onFlip", this.card);
     },
   },
 };
