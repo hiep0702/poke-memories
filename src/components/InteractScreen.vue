@@ -1,3 +1,15 @@
 <template>
-  <h1>dasdsads</h1>
+  <div class="screen">
+    <card-flip />
+  </div>
 </template>
+
+<script>
+import CardFlip from "./CardComponent.vue";
+
+export default {
+  components: {
+    CardFlip,
+  },
+};
+</script>
