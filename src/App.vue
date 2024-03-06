@@ -13,12 +13,17 @@
     :timer="timer"
     @onStartAgain="statusMatch = 'default'"
   />
+  <p class="copyright">
+    Hi i'm tth
+    <a href="https://www.facebook.com/trantuanhiep07">view here</a>
+  </p>
 </template>
 
 <script>
-import InteractScreen from "./components/InteractScreen.vue";
 import MainScreen from "./components/MainScreen.vue";
+import InteractScreen from "./components/InteractScreen.vue";
 import ResultScreen from "./components/ResultScreen.vue";
+
 import { shuffled } from "./utils/array";
 
 export default {
@@ -35,39 +40,47 @@ export default {
         cardsContext: [],
         startedAt: null,
       },
-      statusMatch: "default",
       timer: 0,
+      statusMatch: "default",
     };
   },
   methods: {
-    onHandleBeforeStart(config) {
-      console.log("run onHandleBeforeStart..., ", config);
-      this.settings.totalOfBlocks = config.totalOfBlocks;
+    onHandleBeforeStart(configs) {
+      this.settings.totalOfBlocks = configs.totalOfBlocks;
 
       const firstCards = Array.from(
         { length: this.settings.totalOfBlocks / 2 },
         (_, i) => i + 1
       );
-
       const secondCards = [...firstCards];
       const cards = [...firstCards, ...secondCards];
 
-      this.settings.cardsContext = shuffled(
-        shuffled(shuffled(shuffled(cards)))
-      );
-
+      this.settings.cardsContext = shuffled(shuffled(shuffled(cards)));
       this.settings.startedAt = new Date().getTime();
-      //data ready
+
       this.statusMatch = "match";
     },
 
     onGetResult() {
-      // get timer
-      this.timer = new Date().getTime() - this.settings.startedAt;
-
-      // switch  to result component
       this.statusMatch = "result";
+      this.timer = new Date().getTime() - this.settings.startedAt;
     },
   },
 };
 </script>
+
+<style lang="css" scoped>
+.copyright {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1.5rem;
+  color: var(--light);
+  z-index: 3;
+  font-size: 1.5rem;
+}
+
+.copyright a {
+  color: #f4dc26;
+}
+</style>
